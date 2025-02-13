@@ -1,8 +1,61 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+  // // This is your Prisma schema file,
+  // // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+  // // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+  // // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+  // generator client {
+  //   provider = "prisma-client-js"
+  // }
+
+  // datasource db {
+  //   provider = "postgresql"
+  //   url      = env("DATABASE_URL")
+  // }
+
+  // model User {
+  //   id       Int       @id @default(autoincrement())
+  //   name     String
+  //   email    String    @unique
+  //   password String
+  //   role     String?
+  //   teamId   Int?
+  //   team     Team?     @relation(fields: [teamId], references: [id])
+  //   projects Project[] @relation("UserProjects") // 👈 Define relation explicitly
+  //   tasks    Task[]
+  // }
+
+  // model Team {
+  //   id       Int       @id @default(autoincrement())
+  //   name     String
+  //   members  User[]
+  //   projects Project[]
+  // }
+
+  // model Project {
+  //   id          Int    @id @default(autoincrement())
+  //   projectName        String
+  //   description String
+  //   status      String
+  //   teamId      Int
+  //   team        Team   @relation(fields: [teamId], references: [id])
+  //   ownerId      Int
+  //   owner        User   @relation(fields: [ownerId], references: [id], name: "UserProjects") // 👈 Add opposite relation field
+  //   tasks       Task[]
+  // }
+
+  // model Task {
+  //   id          Int     @id @default(autoincrement())
+  //   taskName    String
+  //   description String
+  //   status      String
+  //   assigneeId  Int
+  //   assignee    User    @relation(fields: [assigneeId], references: [id])
+  //   projectId   Int
+  //   project     Project @relation(fields: [projectId], references: [id])
+  // }
+
+
 
 generator client {
   provider = "prisma-client-js"
@@ -11,4 +64,36 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  role      String?
+  projects  Project[] @relation("ProjectMembers") // Projects this user is part of
+  tasks     Task[]    @relation("TaskAssignments") // Tasks assigned to this user
+  ownedProjects Project[] @relation("ProjectOwner") // Projects this user owns
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  projectName String
+  description String
+  status      String
+  ownerId     Int      // The owner of the project (the user who creates it)
+  owner       User     @relation("ProjectOwner", fields: [ownerId], references: [id])
+  members     User[]   @relation("ProjectMembers") // Members of the project
+  tasks       Task[]   // Tasks within the project
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  taskName    String
+  description String
+  status      String
+  projectId   Int     // Project the task belongs to
+  project     Project @relation(fields: [projectId], references: [id])
+  assignees   User[]   @relation("TaskAssignments") // Users assigned to the task
 }
