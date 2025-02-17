@@ -11,6 +11,5 @@
     "@repo/typescript-config": "*"
   },
   "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "license": "ISC"
 }

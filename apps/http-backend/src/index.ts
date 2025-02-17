@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import { client } from "@repo/db/client";
 import cors from "cors";
 import bcrypt from "bcrypt";
+import { createProject } from "./project/controllers/createProject";
+import { addMembers } from "./project/controllers/addMember";
 const app = express();
 
 app.use(express.json());
@@ -90,6 +92,9 @@ app.post("/login",async (req: Request, res: Response) => {
       return   
   }
   })
+
+app.post('/create_project',createProject);
+app.post('/project/add-member',addMembers);
 const port = 8000;
 
 app.listen(port,()=>{
