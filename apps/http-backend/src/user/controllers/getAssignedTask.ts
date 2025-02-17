@@ -6,7 +6,8 @@ export const getAssignedTasks = async (req: Request, res: Response) => {
     const { userId, requesterId } = req.body; // requesterId is the ID of the user making the request
 
     if (!userId || !requesterId) {
-      return res.status(400).json({ message: "User ID and requester ID are required" });
+      res.status(400).json({ message: "User ID and requester ID are required" });
+      return 
     }
 
     const requester = await client.user.findUnique({
@@ -15,12 +16,14 @@ export const getAssignedTasks = async (req: Request, res: Response) => {
     });
 
     if (!requester) {
-      return res.status(404).json({ message: "Requester not found" });
+       res.status(404).json({ message: "Requester not found" });
+       return
     }
 
     // If the requester is NOT an admin and is trying to access another user's tasks, deny access
     if (requester.role !== "admin" && parseInt(requesterId) !== parseInt(userId)) {
-      return res.status(403).json({ message: "Forbidden: You can only access your own tasks" });
+       res.status(403).json({ message: "Forbidden: You can only access your own tasks" });
+       return
     }
 
     // Fetch tasks assigned to the target user
@@ -33,9 +36,11 @@ export const getAssignedTasks = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({ tasks });
+     res.status(200).json({ tasks });
+     return
   } catch (error) {
     console.error("Error fetching assigned tasks:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
+     res.status(500).json({ message: "Internal server error" });
+     return
+    }
 };

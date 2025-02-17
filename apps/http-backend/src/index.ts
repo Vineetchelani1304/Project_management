@@ -4,7 +4,7 @@ import { client } from "@repo/db/client";
 import cors from "cors";
 import bcrypt from "bcrypt";
 import { createProject } from "./project/controllers/createProject";
-import { addMembers } from "./project/controllers/addMember";
+import { addMember } from "./project/controllers/addMember";
 const app = express();
 
 app.use(express.json());
@@ -94,7 +94,7 @@ app.post("/login",async (req: Request, res: Response) => {
   })
 
 app.post('/create_project',createProject);
-app.post('/project/add-member',addMembers);
+app.post('/project/add-member',addMember);
 const port = 8000;
 
 app.listen(port,()=>{

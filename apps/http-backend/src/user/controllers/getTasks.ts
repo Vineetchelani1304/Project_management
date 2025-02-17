@@ -6,7 +6,8 @@ export const getAssignedTasks = async (req: Request, res: Response) => {
     const { userId } = req.body;
 
     if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
+       res.status(400).json({ message: "User ID is required" });
+       return
     }
 
     const tasks = await client.task.findMany({
@@ -18,9 +19,11 @@ export const getAssignedTasks = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({ tasks });
+     res.status(200).json({ tasks });
+     return
   } catch (error) {
     console.error("Error fetching assigned tasks:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
+     res.status(500).json({ message: "Internal server error" });
+     return
+    }
 };

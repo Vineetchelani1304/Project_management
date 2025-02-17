@@ -6,7 +6,8 @@ export const getProjectsAsOwner = async (req: Request, res: Response) => {
     const { userId } = req.body;
 
     if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
+      res.status(400).json({ message: "User ID is required" });
+      return 
     }
 
     const ownedProjects = await client.project.findMany({
@@ -17,9 +18,11 @@ export const getProjectsAsOwner = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({ ownedProjects });
+     res.status(200).json({ ownedProjects });
+     return
   } catch (error) {
     console.error("Error fetching owned projects:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
+     res.status(500).json({ message: "Internal server error" });
+     return
+    }
 };
