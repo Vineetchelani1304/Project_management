@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { client } from "@repo/db/client";
 
-export const getProjectsAsOwner = async (req: Request, res: Response) => {
+export const getOwnedProjects = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
 

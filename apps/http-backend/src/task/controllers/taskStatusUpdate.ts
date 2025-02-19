@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { client } from "@repo/db/client";
 
-export const updateTaskStatus = async (req: Request, res: Response) => {
+export const taskStatusUpdate = async (req: Request, res: Response) => {
   try {
     const { taskId } = req.body; // taskId from the URL
     const { userId, status } = req.body; // userId and status to update

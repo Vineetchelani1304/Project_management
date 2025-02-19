@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { client } from "@repo/db/client";
 
-export const removeMemberFromProject = async (req: Request, res: Response) => {
+export const removeMember = async (req: Request, res: Response) => {
   try {
     const { projectId, memberId } = req.body; // Expecting projectId and memberId
 

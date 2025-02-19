@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { client } from "@repo/db/client";
 
-export const getAssignedTasks = async (req: Request, res: Response) => {
+export const getTasks = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
 

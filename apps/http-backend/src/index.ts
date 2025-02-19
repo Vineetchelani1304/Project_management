@@ -5,6 +5,13 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import { createProject } from "./project/controllers/createProject";
 import { addMember } from "./project/controllers/addMember";
+import { removeMember } from "./project/controllers/removeMember";
+import { getTasks } from "./task/controllers/getTasks";
+import { getAssignedTasks } from "./task/controllers/getAssignedTask";
+import { getProjectProgress } from "./project/controllers/projectProgress";
+import { getUserProjects } from "./user/controllers/getUserProject";
+import { taskStatusUpdate } from "./task/controllers/taskStatusUpdate";
+import { getProjectMembers } from "./project/controllers/getMembers";
 const app = express();
 
 app.use(express.json());
@@ -95,6 +102,14 @@ app.post("/login",async (req: Request, res: Response) => {
 
 app.post('/create_project',createProject);
 app.post('/project/add-member',addMember);
+app.delete('/project/remove-member',removeMember);
+app.get('/getTasks',getTasks)
+app.get('/getAssignedTasks',getAssignedTasks);
+app.get('/getProjectProgress',getProjectProgress);
+app.get('/getOwnedProjects',getProjectProgress);
+app.get('/getUserProjects',getUserProjects);
+app.put('/taskStatusUpdate',taskStatusUpdate);
+app.get('/getMembers',getProjectMembers)
 const port = 8000;
 
 app.listen(port,()=>{
