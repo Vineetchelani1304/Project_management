@@ -12,6 +12,7 @@ import { getProjectProgress } from "./project/controllers/projectProgress";
 import { getUserProjects } from "./user/controllers/getUserProject";
 import { taskStatusUpdate } from "./task/controllers/taskStatusUpdate";
 import { getProjectMembers } from "./project/controllers/getMembers";
+import { removeTask } from "./task/controllers/removeTask";
 const app = express();
 
 app.use(express.json());
@@ -104,6 +105,7 @@ app.post('/create_project',createProject);
 app.post('/project/add-member',addMember);
 app.delete('/project/remove-member',removeMember);
 app.get('/getTasks',getTasks)
+app.delete('/removeTask',removeTask)
 app.get('/getAssignedTasks',getAssignedTasks);
 app.get('/getProjectProgress',getProjectProgress);
 app.get('/getOwnedProjects',getProjectProgress);
